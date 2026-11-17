@@ -6,6 +6,10 @@ cmd=${1:-list}
 case "$cmd" in
   add)
     title=${2-}
+    case "$title" in
+      *[![:space:]]*) ;;
+      *) echo "a title is needed" >&2; exit 2 ;;
+    esac
     printf '%s\n' "$title" >> "$FILE"
     echo "added: $title"
     ;;
