@@ -13,4 +13,6 @@ check() {
 check "add keeps a title" sh -c 'sh todo.sh add "buy milk" && grep -qx "buy milk" "$TODO_FILE"'
 check "list numbers the items" sh -c 'sh todo.sh list | grep -q "^1\. buy milk$"'
 check "done removes an item" sh -c 'sh todo.sh done 1 && [ ! -s "$TODO_FILE" ]'
+check "add refuses an empty title" sh -c 'sh todo.sh add "" 2>/dev/null; [ $? -eq 2 ] && [ ! -s "$TODO_FILE" ]'
+check "add refuses a title of spaces" sh -c 'sh todo.sh add "   " 2>/dev/null; [ $? -eq 2 ] && [ ! -s "$TODO_FILE" ]'
 exit $fail
